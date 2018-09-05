@@ -20,6 +20,10 @@ dependencies {
     api COMMON_MARK_TABLE
 }
 
-if (project.hasProperty('release')) {
+afterEvaluate {
+    generateReleaseBuildConfig.enabled = false
+}
+
+if (hasProperty('release')) {
     apply from: 'https://raw.githubusercontent.com/noties/gradle-mvn-push/master/gradle-mvn-push-aar.gradle'
 }

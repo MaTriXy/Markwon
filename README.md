@@ -4,6 +4,7 @@
 
 [![markwon](https://img.shields.io/maven-central/v/ru.noties/markwon.svg?label=markwon)](http://search.maven.org/#search|ga|1|g%3A%22ru.noties%22%20AND%20a%3A%22markwon%22)
 [![markwon-image-loader](https://img.shields.io/maven-central/v/ru.noties/markwon-image-loader.svg?label=markwon-image-loader)](http://search.maven.org/#search|ga|1|g%3A%22ru.noties%22%20AND%20a%3A%22markwon-image-loader%22)
+[![markwon-syntax](https://img.shields.io/maven-central/v/ru.noties/markwon-syntax.svg?label=markwon-syntax)](http://search.maven.org/#search|ga|1|g%3A%22ru.noties%22%20AND%20a%3A%22markwon-syntax%22)
 [![markwon-view](https://img.shields.io/maven-central/v/ru.noties/markwon-view.svg?label=markwon-view)](http://search.maven.org/#search|ga|1|g%3A%22ru.noties%22%20AND%20a%3A%22markwon-view%22)
 
 **Markwon** is a library for Android that renders markdown as system-native Spannables. It gives ability to display markdown in all TextView widgets (**TextView**, **Button**, **Switch**, **CheckBox**, etc), **Notifications**, **Toasts**, etc. <u>**No WebView is required**</u>. Library provides reasonable defaults for display style of markdown but also gives all the means to tweak the appearance if desired. All markdown features are supported (including limited support for inlined HTML code, markdown tables and images).
@@ -12,10 +13,34 @@
 
 ## Installation
 ```groovy
-compile 'ru.noties:markwon:1.0.5'
-compile 'ru.noties:markwon-image-loader:1.0.5' // optional
-compile 'ru.noties:markwon-view:1.0.5' // optional
+implementation 'ru.noties:markwon:1.1.0'
+implementation 'ru.noties:markwon-image-loader:1.1.0' // optional
+implementation 'ru.noties:markwon-syntax:1.1.0' // optional
+implementation 'ru.noties:markwon-view:1.1.0' // optional
 ```
+
+### Snapshot
+![markwon-snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/ru.noties/markwon.svg?label=markwon)
+
+In order to use latest `SNAPSHOT` version add snapshot repository to your root project's `build.gradle` file:
+
+```groovy
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    }
+}
+```
+
+and then in your module `build.gradle`:
+
+```groovy
+implementation 'ru.noties:markwon:1.1.1-SNAPSHOT'
+```
+
+Please note that `markwon-image-loader`, `markwon-syntax` and `markwon-view` are also present in `SNAPSHOT` repository and share the same version as main `markwon` artifact.
 
 ## Supported markdown features:
 * Emphasis (`*`, `_`)
@@ -111,7 +136,20 @@ Markwon.scheduleDrawables(textView);
 Markwon.scheduleTableRows(textView);
 ```
 
+Please note that if you are having trouble with `LinkMovementMethod` you can use
+`Markwon.setText(textView, markdown, movementMethod)` method (`@since 1.0.6`) to specify _no_ movement
+method (aka `null`) or own implementation. As an alternative to the system `LinkMovementMethod`
+you can use [Better-Link-Movement-Method][better-link-movement-method].
+
 Please refer to [SpannableConfiguration] document for more info
+
+## Syntax highlight
+
+Starting with version `1.1.0` there is an artifact (`markwon-syntax`) that allows you to have syntax highlight functionality.
+It is based on [Prism4j](https://github.com/noties/Prism4j) project. It contains 2 builtin themes:
+`Default` (light, `Prism4jThemeDefault`) and `Darkula` (dark, `Prism4jThemeDarkula`).
+
+[library-syntax](./library-syntax/)
 
 ---
 
@@ -269,6 +307,10 @@ Underscores (`_`)
 
 ---
 
+## Applications using Markwon
+
+* [FairNote Notepad](https://play.google.com/store/apps/details?id=com.rgiskard.fairnote)
+
 
 ## License
 
@@ -292,6 +334,7 @@ Underscores (`_`)
 [commonmark-java]: https://github.com/atlassian/commonmark-java/blob/master/README.md
 [cheatsheet]: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 [SpannableConfiguration]: ./docs/SpannableConfiguration.md
+[better-link-movement-method]: https://github.com/saket/Better-Link-Movement-Method
 
 [arbitrary case-insensitive reference text]: https://www.mozilla.org
 [1]: http://slashdot.org

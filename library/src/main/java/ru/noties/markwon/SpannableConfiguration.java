@@ -3,8 +3,8 @@ package ru.noties.markwon;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import ru.noties.markwon.renderer.html.ImageSizeResolver;
-import ru.noties.markwon.renderer.html.ImageSizeResolverDef;
+import ru.noties.markwon.renderer.ImageSizeResolver;
+import ru.noties.markwon.renderer.ImageSizeResolverDef;
 import ru.noties.markwon.renderer.html.SpannableHtmlParser;
 import ru.noties.markwon.spans.AsyncDrawable;
 import ru.noties.markwon.spans.LinkSpan;
@@ -30,6 +30,9 @@ public class SpannableConfiguration {
     private final LinkSpan.Resolver linkResolver;
     private final UrlProcessor urlProcessor;
     private final SpannableHtmlParser htmlParser;
+    private final ImageSizeResolver imageSizeResolver;
+    private final SpannableFactory factory; // @since 1.1.0
+    private final boolean softBreakAddsNewLine; // @since 1.1.1
 
     private SpannableConfiguration(@NonNull Builder builder) {
         this.theme = builder.theme;
@@ -38,6 +41,9 @@ public class SpannableConfiguration {
         this.linkResolver = builder.linkResolver;
         this.urlProcessor = builder.urlProcessor;
         this.htmlParser = builder.htmlParser;
+        this.imageSizeResolver = builder.imageSizeResolver;
+        this.factory = builder.factory;
+        this.softBreakAddsNewLine = builder.softBreakAddsNewLine;
     }
 
     @NonNull
@@ -70,6 +76,25 @@ public class SpannableConfiguration {
         return htmlParser;
     }
 
+    @NonNull
+    public ImageSizeResolver imageSizeResolver() {
+        return imageSizeResolver;
+    }
+
+    @NonNull
+    public SpannableFactory factory() {
+        return factory;
+    }
+
+    /**
+     * @return a flag indicating if soft break should be treated as a hard
+     * break and thus adding a new line instead of adding a white space
+     * @since 1.1.1
+     */
+    public boolean softBreakAddsNewLine() {
+        return softBreakAddsNewLine;
+    }
+
     @SuppressWarnings("unused")
     public static class Builder {
 
@@ -81,6 +106,8 @@ public class SpannableConfiguration {
         private UrlProcessor urlProcessor;
         private SpannableHtmlParser htmlParser;
         private ImageSizeResolver imageSizeResolver;
+        private SpannableFactory factory; // @since 1.1.0
+        private boolean softBreakAddsNewLine; // @since 1.1.1
 
         Builder(@NonNull Context context) {
             this.context = context;
@@ -131,6 +158,28 @@ public class SpannableConfiguration {
             return this;
         }
 
+        /**
+         * @since 1.1.0
+         */
+        @NonNull
+        public Builder factory(@NonNull SpannableFactory factory) {
+            this.factory = factory;
+            return this;
+        }
+
+        /**
+         * @param softBreakAddsNewLine a flag indicating if soft break should be treated as a hard
+         *                             break and thus adding a new line instead of adding a white space
+         * @return self
+         * @see <a href="https://spec.commonmark.org/0.28/#soft-line-breaks">spec</a>
+         * @since 1.1.1
+         */
+        @NonNull
+        public Builder softBreakAddsNewLine(boolean softBreakAddsNewLine) {
+            this.softBreakAddsNewLine = softBreakAddsNewLine;
+            return this;
+        }
+
         @NonNull
         public SpannableConfiguration build() {
 
@@ -154,13 +203,23 @@ public class SpannableConfiguration {
                 urlProcessor = new UrlProcessorNoOp();
             }
 
+            if (imageSizeResolver == null) {
+                imageSizeResolver = new ImageSizeResolverDef();
+            }
+
+            // @since 1.1.0
+            if (factory == null) {
+                factory = SpannableFactoryDef.create();
+            }
+
             if (htmlParser == null) {
-
-                if (imageSizeResolver == null) {
-                    imageSizeResolver = new ImageSizeResolverDef();
-                }
-
-                htmlParser = SpannableHtmlParser.create(theme, asyncDrawableLoader, urlProcessor, linkResolver, imageSizeResolver);
+                htmlParser = SpannableHtmlParser.create(
+                        factory,
+                        theme,
+                        asyncDrawableLoader,
+                        urlProcessor,
+                        linkResolver,
+                        imageSizeResolver);
             }
 
             return new SpannableConfiguration(this);
