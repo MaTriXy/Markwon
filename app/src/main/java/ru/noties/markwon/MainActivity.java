@@ -6,12 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 import ru.noties.debug.Debug;
 
 public class MainActivity extends Activity {
@@ -28,9 +28,6 @@ public class MainActivity extends Activity {
     @Inject
     UriProcessor uriProcessor;
 
-    @Inject
-    GifProcessor gifProcessor;
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +37,6 @@ public class MainActivity extends Activity {
                 .inject(this);
 
         themes.apply(this);
-
-        // how can we obtain SpannableConfiguration after theme was applied?
-        // as we inject `themes` we won't be able to inject configuration, as it requires theme set
 
         setContentView(R.layout.activity_main);
 
@@ -59,7 +53,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        final TextView textView = Views.findView(this, R.id.text);
+        final TextView textView = findViewById(R.id.text);
         final View progress = findViewById(R.id.progress);
 
         appBarRenderer.render(appBarState());
@@ -69,11 +63,9 @@ public class MainActivity extends Activity {
             public void apply(final String text) {
                 markdownRenderer.render(MainActivity.this, themes.isLight(), uri(), text, new MarkdownRenderer.MarkdownReadyListener() {
                     @Override
-                    public void onMarkdownReady(CharSequence markdown) {
+                    public void onMarkdownReady(@NonNull Markwon markwon, Spanned markdown) {
 
-                        Markwon.setText(textView, markdown, BetterLinkMovementMethod.getInstance());
-
-                        gifProcessor.process(textView);
+                        markwon.setParsedMarkdown(textView, markdown);
 
                         Views.setVisible(progress, false);
                     }

@@ -1,1 +1,15 @@
-include ':app', ':library', ':library-image-loader', ':library-view', ':sample-custom-extension', ':library-syntax'
+rootProject.name = 'MarkwonProject'
+include ':app', ':sample',
+        ':markwon-core',
+        ':markwon-ext-latex',
+        ':markwon-ext-strikethrough',
+        ':markwon-ext-tables',
+        ':markwon-ext-tasklist',
+        ':markwon-html',
+        ':markwon-image-gif',
+        ':markwon-image-okhttp',
+        ':markwon-image-svg',
+        ':markwon-recycler',
+        ':markwon-recycler-table',
+        ':markwon-syntax-highlight',
+        ':markwon-test-span'
