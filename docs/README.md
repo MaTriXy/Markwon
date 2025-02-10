@@ -5,8 +5,8 @@ title: 'Introduction'
 <img :src="$withBase('/art/markwon_logo.png')" alt="Markwon Logo" width="50%">
 
 <br><br>
-[![markwon](https://img.shields.io/maven-central/v/ru.noties.markwon/core.svg?label=markwon)](http://search.maven.org/#search|ga|1|g%3A%22ru.noties.markwon%22%20)
-[![Build Status](https://travis-ci.org/noties/Markwon.svg?branch=master)](https://travis-ci.org/noties/Markwon)
+[![markwon](https://img.shields.io/maven-central/v/io.noties.markwon/core.svg?label=markwon)](http://search.maven.org/#search|ga|1|g%3A%22io.noties.markwon%22%20)
+[![Build](https://github.com/noties/Markwon/workflows/Build/badge.svg)](https://github.com/noties/Markwon/actions)
 
 **Markwon** is a markdown library for Android. It parses markdown following 
 <Link name="commonmark-spec" /> with the help of amazing <Link name="commonmark-java" /> library
@@ -21,23 +21,28 @@ but also gives all the means to tweak the appearance if desired. All markdown fe
 listed in <Link name="commonmark-spec" /> are supported (including support for **inlined/block HTML code**, 
 **markdown tables**, **images** and **syntax highlight**).
 
+Since version <Badge text="4.2.0" /> **Markwon** comes with an [editor] to _highlight_ markdown input
+as user types (for example in **EditText**).
+
+[editor]: /docs/v4/editor/
+
 ## Supported markdown features
 
 * Emphasis (`*`, `_`)
 * Strong emphasis (`**`, `__`)
 * Headers (`#{1,6}`)
 * Links (`[]()` && `[][]`)
-* [Images](/docs/v3/core/images.md)
+* [Images](/docs/v4/image/)
 * Thematic break (`---`, `***`, `___`)
 * Quotes & nested quotes (`>{1,}`)
 * Ordered & non-ordered lists & nested ones
 * Inline code
 * Code blocks
-* [Strike-through](/docs/v3/ext-strikethrough/) (`~~`)
-* [Tables](/docs/v3/ext-tables/) (*with limitations*)
-* [Syntax highlight](/docs/v3/syntax-highlight/)
-* [LaTeX](/docs/v3/ext-latex/) formulas
-* [HTML](/docs/v3/html/)
+* [Strike-through](/docs/v4/ext-strikethrough/) (`~~`)
+* [Tables](/docs/v4/ext-tables/) (*with limitations*)
+* [Syntax highlight](/docs/v4/syntax-highlight/)
+* [LaTeX](/docs/v4/ext-latex/) formulas
+* [HTML](/docs/v4/html/)
   * Emphasis (`<i>`, `<em>`, `<cite>`, `<dfn>`)
   * Strong emphasis (`<b>`, `<strong>`)
   * SuperScript (`<sup>`)
@@ -49,9 +54,9 @@ listed in <Link name="commonmark-spec" /> are supported (including support for *
   * Images (`img` will require configured image loader)
   * Blockquote (`blockquote`)
   * Heading (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`)
-  * there is support to render any HTML tag, but it will require to create a special `TagHandler`,
-    more information can be found in [HTML section](/docs/v3/core/html-renderer.md)
-* [Task lists](/docs/v3/ext-tasklist/):
+  * there is support to render any HTML/XML tag, but it will require to create a special `TagHandler`,
+    more information can be found in [HTML section](/docs/v4/html/#taghandler)
+* [Task lists](/docs/v4/ext-tasklist/):
 <ul style="list-style-type: none; margin: 0; padding: 0;">
 <li><input type="checkbox" disabled>Not <i>done</i></li>
 <li><input type="checkbox" disabled checked><strong>Done</strong> with <code>X</code></li>
@@ -66,21 +71,37 @@ listed in <Link name="commonmark-spec" /> are supported (including support for *
 <img :src="$withBase('/art/mw_dark_01.png')" alt="screenshot dark #2" width="30%">
 
 By default configuration uses TextView textColor for styling, so changing textColor changes style
-
-:::tip Sample application
-Screenshots are taken from sample application. It is a generic markdown viewer 
-with support to display markdown content via `http`, `https` &amp; `file` schemes 
-and 2 themes included: Light &amp; Dark. It can be downloaded from [releases](https://github.com/noties/Markwon/releases)
-:::
+<br /><br /><br />
 
 
-## Awesome Markwon
+<style>
+.awesome-block {
+    background-color: #4CAF50;
+    height: 7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-<u>Applications using Markwon</u>:
+.awesome-block * {
+    border: 0
+}
+</style>
+
+
+<div class="awesome-block">
+
+## # Awesome Markwon
+
+</div>
+<br>
+<AwesomeSection />
+
 
 * [Partico](https://partiko.app/) - Partiko is a censorship free social network.
 * [FairNote](https://play.google.com/store/apps/details?id=com.rgiskard.fairnote) - simple and intuitive notepad app. It gives you speed and efficiency when you write notes, to-do lists, e-mails, or jot down quick ideas.
 * [Boxcryptor](https://www.boxcryptor.com) - A software that adds AES-256 and RSA encryption to Dropbox, Google Drive, OneDrive and many other clouds.
+* [Senstone Portable Voice Assistant](https://play.google.com/store/apps/details?id=com.senstone) - Senstone is a tiny wearable personal assistant powered by this App. It lets you capture your ideas, notes and reminders handsfree without pulling out your phone. 
 
 
 <u>Extension/plugins</u>:

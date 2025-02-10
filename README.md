@@ -2,7 +2,7 @@
 
 # Markwon
 
-[![Build Status](https://travis-ci.org/noties/Markwon.svg?branch=master)](https://travis-ci.org/noties/Markwon)
+[![Build](https://github.com/noties/Markwon/workflows/Build/badge.svg)](https://github.com/noties/Markwon/actions)
 
 **Markwon** is a markdown library for Android. It parses markdown
 following [commonmark-spec] with the help of amazing [commonmark-java]
@@ -19,29 +19,33 @@ features listed in [commonmark-spec] are supported
 (including support for **inlined/block HTML code**, **markdown tables**,
 **images** and **syntax highlight**).
 
+`Markwon` comes with a [sample application](./app-sample/). It is a
+collection of library usages that comes with search and source code for
+each code sample.
+
+Since version **4.2.0** **Markwon** comes with an [editor](./markwon-editor/) to _highlight_ markdown input
+as user types (for example in **EditText**).
+
 [commonmark-spec]: https://spec.commonmark.org/0.28/
 [commonmark-java]: https://github.com/atlassian/commonmark-java/blob/master/README.md
 
-<sup>*</sup>*This file is displayed by default in the [sample-apk] (`markwon-sample-{latest-version}-debug.apk`) application. Which is a generic markdown viewer with support to display markdown via `http`, `https` & `file` schemes and 2 themes included: Light & Dark*
-
-[sample-apk]: https://github.com/noties/Markwon/releases
-
 ## Installation
 
-![stable](https://img.shields.io/maven-central/v/ru.noties.markwon/core.svg?label=stable)
-![snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/ru.noties.markwon/core.svg?label=snapshot)
+![stable](https://img.shields.io/maven-central/v/io.noties.markwon/core.svg?label=stable)
+![snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/io.noties.markwon/core.svg?label=snapshot)
 
-```groovy
-implementation "ru.noties.markwon:core:${markwonVersion}"
+```kotlin
+implementation "io.noties.markwon:core:${markwonVersion}"
 ```
 
-Full list of available artifacts is present in the [install section](https://noties.github.io/Markwon/docs/v3/install.html)
+Full list of available artifacts is present in the [install section](https://noties.github.io/Markwon/docs/v4/install.html)
 of the [documentation] web-site.
 
 Please visit [documentation] web-site for further reference.
 
 
-> You can find previous version of Markwon in [2.x.x](https://github.com/noties/Markwon/tree/2.x.x) branch
+> You can find previous version of Markwon in [2.x.x](https://github.com/noties/Markwon/tree/2.x.x)
+and [3.x.x](https://github.com/noties/Markwon/tree/3.x.x) branches
 
 
 ## Supported markdown features:
@@ -80,7 +84,7 @@ Please visit [documentation] web-site for further reference.
 
 ## Screenshots
 
-Taken with default configuration (except for image loading):
+Taken with default configuration (except for image loading) in [sample app](./app-sample/):
 
 <a href="./art/mw_light_01.png"><img src="./art/mw_light_01.png" width="30%" /></a>
 <a href="./art/mw_light_02.png"><img src="./art/mw_light_02.png" width="30%" /></a>
@@ -97,14 +101,10 @@ Please visit [documentation] web-site for reference
 
 [documentation]: https://noties.github.io/Markwon
 
----
 
-## Applications using Markwon
-
-* [Partiko](https://partiko.app)
-* [FairNote Notepad](https://play.google.com/store/apps/details?id=com.rgiskard.fairnote)
-* [Boxcryptor](https://www.boxcryptor.com)
-
+## Consulting
+Paid consulting is available. Please reach me out at [markwon+consulting[at]noties.io](mailto:markwon+consulting@noties.io)
+to discuss your idea or a project
 
 ---
 
@@ -217,7 +217,6 @@ public static Parser createParser() {
     android:layout_margin="16dip"
     android:lineSpacingExtra="2dip"
     android:textSize="16sp"
-    tools:context="ru.noties.markwon.MainActivity"
     tools:text="yo\nman" />
 
 </ScrollView>
@@ -296,7 +295,7 @@ Underscores (`_`)
 ## License
 
 ```
-  Copyright 2017 Dimitry Ivanov (mail@dimitryivanov.ru)
+  Copyright 2019 Dimitry Ivanov (legal@noties.io)
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
